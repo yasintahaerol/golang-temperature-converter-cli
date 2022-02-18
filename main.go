@@ -25,12 +25,23 @@ func main() {
 
 	for {
 		fmt.Print("What is the current temperature in " + originUnit + " ? ")
-
+		_, err = fmt.Scanln(&originValue)
+		if err != nil {
+			printError(errReadingInput)
+		}
 		fmt.Print("Would you like to convert another temperature ? (y/n) ")
-
-		if shouldConvertAgain != "Y" {
+		_, err = fmt.Scanln(&shouldConvertAgain)
+		if err != nil {
+			printError(errReadingInput)
+		}
+		if strings.ToUpper(strings.TrimSpace(shouldConvertAgain)) shouldConvertAgain != "Y" {
 			fmt.Println("Good bye!")
 			break
+		}
+		if originUnit == "C" {
+			convertToFahrenheit(originValue)
+		} else {
+			convertToCelsius(originValue)
 		}
 	}
 }
